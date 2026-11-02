@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rodrigo Peña</title>
+<meta name="description" content="Rodrigo Peña, PhD student in Economics at CEMFI. Financial econometrics, time series and credit risk.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html { color-scheme: light; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+/* Layout: fixed identity column on the left (photo, name, bio, contact); research listing scrolls on the right. Stacks on phones. */
+:root {
+  /* Main reading area */
+  --bg: #ffffff;
+  --fg: #16283a;
+  --muted: #566879;
+  --accent: #1b507e;
+  --rule: #dfe6ed;
+  --chip: #e6edf3;
+  /* Identity column: Prussian blue */
+  --side-bg: #1a3b5d;
+  --side-fg: #f0f5fa;
+  --side-muted: #b0c3d6;
+  --side-accent: #d2e3f4;
+  --side-rule: #2f5174;
+
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; text-underline-offset: 3px; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* ---------- Identity column ---------- */
+.side {
+  background: var(--side-bg);
+  color: var(--side-fg);
+  border-right: 1px solid var(--side-rule);
+}
+.side a { color: var(--side-accent); }
+.side a:focus-visible { outline-color: var(--side-accent); }
+.side-inner {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-block: 56px 40px;
+  padding-left: max(36px, env(safe-area-inset-left, 0px));
+  padding-right: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.photo {
+  width: 172px;
+  aspect-ratio: 1;
+  max-width: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--side-rule);
+  background: var(--side-rule);
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 31px;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+.role {
+  margin: 6px 0 0;
+  font-size: 14.5px;
+  color: var(--side-muted);
+}
+.role a { color: inherit; }
+.bio { margin: 0; font-size: 15px; line-height: 1.6; }
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 18px;
+  border-top: 1px solid var(--side-rule);
+  font-size: 14.5px;
+}
+.contact .email { font-family: var(--font-mono); font-size: 13px; }
+.contact .addr { color: var(--side-muted); font-size: 13.5px; line-height: 1.5; }
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ---------- Main ---------- */
+.main {
+  padding-block: 56px 96px;
+  padding-left: 64px;
+  padding-right: max(32px, env(safe-area-inset-right, 0px));
+  min-width: 0;
+}
+.main-inner { max-width: 720px; display: flex; flex-direction: column; gap: 56px; }
+
+.topnav {
+  display: flex;
+  gap: 26px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.topnav a { color: var(--muted); }
+.topnav a:hover { color: var(--accent); text-decoration: none; }
+
+section { display: flex; flex-direction: column; gap: 22px; scroll-margin-top: 24px; }
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.2;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+h3 {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.list { display: flex; flex-direction: column; gap: 30px; }
+.paper { display: flex; flex-direction: column; gap: 5px; }
+.paper-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.3;
+  text-wrap: balance;
+  color: var(--fg);
+}
+.paper-title a { color: var(--fg); }
+.paper-title a:hover { color: var(--accent); }
+.authors { margin: 0; font-size: 15px; }
+.venue { margin: 0; font-size: 14.5px; color: var(--muted); font-style: italic; }
+.meta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.toggle .caret { display: inline-block; transition: transform .18s ease; font-size: 10px; }
+.toggle[aria-expanded="true"] .caret { transform: rotate(90deg); }
+.toggle:hover { text-decoration: underline; text-underline-offset: 3px; }
+.tag {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--muted);
+  background: var(--chip);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.abstract {
+  margin: 8px 0 2px;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--rule);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 66ch;
+}
+
+.wip { display: flex; flex-direction: column; gap: 14px; }
+.wip .paper-title { font-size: 19px; }
+
+.teach { display: flex; flex-direction: column; gap: 4px; }
+.teach-title { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 19px; }
+
+.footer { font-size: 13px; color: var(--muted); }
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .side { border-right: 0; border-bottom: 1px solid var(--side-rule); }
+  .side-inner {
+    position: static;
+    max-height: none;
+    padding-block: 40px 32px;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+  }
+  .photo { width: 136px; }
+  .main {
+    padding-block: 36px 72px;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+  }
+  .main-inner { gap: 44px; }
+  .name { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toggle .caret { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="side">
+    <div class="side-inner">
+      <div class="photo"><img src="files/photo.jpg" alt="Rodrigo Peña" width="400" height="400"></div>
+
+      <div>
+        <h1 class="name">Rodrigo Peña</h1>
+        <p class="role">PhD Student in Economics<br><a href="https://www.cemfi.es/" target="_blank" rel="noopener">CEMFI</a>, Madrid</p>
+      </div>
+
+      <p class="bio">I am a fourth-year PhD student in Economics at CEMFI. I work on financial econometrics and time series analysis, with a focus on credit risk. I am also interested in panel data and empirical Bayes methods.</p>
+
+      <div class="contact">
+        <span class="email">rodrigo.pena [at] cemfi.edu.es</span>
+        <span class="addr">CEMFI · Casado del Alisal 5<br>28014 Madrid, Spain</span>
+        <div class="links">
+          <a href="files/CV.pdf" target="_blank" rel="noopener">CV</a>
+          <a href="https://github.com/rodrigopenaill" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" id="main-content">
+    <div class="main-inner">
+      <nav class="topnav" aria-label="Sections">
+        <a href="#research">Research</a>
+        <a href="#teaching">Teaching</a>
+        <a href="files/CV.pdf" target="_blank" rel="noopener">CV</a>
+      </nav>
+
+      <section id="research">
+        <h2>Research</h2>
+
+        <h3>Working papers</h3>
+        <div class="list">
+
+          <article class="paper">
+            <h4 class="paper-title">Long-Term Risk Differentiation</h4>
+            <p class="meta">2026</p>
+            <div class="actions">
+              <button class="toggle" type="button" aria-expanded="false" aria-controls="abs-ratings"><span class="caret">▶</span>Abstract</button>
+              <span class="tag">Draft coming soon</span>
+            </div>
+            <div class="abstract" id="abs-ratings" hidden>
+              Credit ratings used for regulatory capital typically classify borrowers according to current default risk, incorporating long-term creditworthiness only when calibrating the probabilities of default attached to each grade. Yet such calibration cannot correct rating assignments that reflect transitory fluctuations rather than persistent creditworthiness. Using Bank of Spain credit scores for Spanish firms over 2000–2023, I estimate a state-space model separating persistent creditworthiness from aggregate and firm-specific transitory variation. Smoothed estimates provide a retrospective benchmark for quantifying differences in rating assignments, while filtered estimates are used to construct alternative ratings based on current and past scores. The original point-in-time (PIT) ratings differ from the benchmark in 51.2% of firm-year observations, compared with 27.9% for filtered ratings. For medium, small, and micro firms, filtered ratings increasingly outperform PIT ratings in differentiating future defaults as the horizon lengthens. In contrast, filtered ratings do not improve risk differentiation for large firms. Neither mechanical smoothing nor the removal of aggregate fluctuations reproduces these gains, highlighting the importance of firm-specific transitory variation.
+            </div>
+          </article>
+
+          <article class="paper">
+            <h4 class="paper-title"><a href="files/natural-rate.pdf" target="_blank" rel="noopener">Unobservable No More: Estimating the Natural Rate of Interest under Flat IS and Phillips Curves</a></h4>
+            <p class="authors">with Gabriele Fiorentini, Alessandro Galesi, Gabriel Pérez Quirós and Enrique Sentana</p>
+            <p class="venue">CEPR Discussion Paper DP21256</p>
+            <p class="meta">March 2026 · JEL E43, E52, C32, C52</p>
+            <div class="actions">
+              <button class="toggle" type="button" aria-expanded="false" aria-controls="abs-rstar"><span class="caret">▶</span>Abstract</button>
+              <a href="files/natural-rate.pdf" target="_blank" rel="noopener">Paper</a>
+              <a href="https://cepr.org/publications/dp21256" target="_blank" rel="noopener">CEPR</a>
+            </div>
+            <div class="abstract" id="abs-rstar" hidden>
+              We show that the Laubach and Williams (2003) model and its variants in Holston, Laubach and Williams (2017, 2023) cannot estimate the natural rate with finite precision when either the IS curve or the Phillips curve are flat. To solve this unobservability, we propose a simple augmented model with a mean-reverting interest rate gap that considerably narrows the natural rate's confidence bands in those empirically relevant situations. We also assess the ability of the corporate risk premium and the share of working age population to explain movements in the natural rate, but they generate filtered estimates that fluctuate too much.
+            </div>
+          </article>
+        </div>
+
+        <h3>Work in progress</h3>
+        <div class="wip">
+          <article class="paper">
+            <h4 class="paper-title">Local Projections under Latent Regimes</h4>
+            <p class="authors">with J. Ren</p>
+          </article>
+        </div>
+
+        <h3>Other writing</h3>
+        <div class="wip">
+          <article class="paper">
+            <h4 class="paper-title">Discussion of “Matrix Completion When Missing Is Not at Random and Its Applications in Causal Panel Data Models” by J. Choi and M. Yuan</h4>
+            <p class="authors">with Dmitry Arkhangelsky and C. Mylonakis</p>
+            <p class="venue">Journal of the American Statistical Association</p>
+            <p class="meta">2025</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="teaching">
+        <h2>Teaching</h2>
+        <div class="teach">
+          <p class="teach-title">Financial Economics</p>
+          <p class="authors">Teaching Assistant for Enrique Sentana</p>
+          <p class="meta">CEMFI · 2025–26</p>
+        </div>
+      </section>
+
+      <p class="footer">Last updated November 2026</p>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Abstract toggles
+  document.querySelectorAll('.toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var box = document.getElementById(btn.getAttribute('aria-controls'));
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      box.hidden = open;
+    });
+  });
+</script>
+</body>
+</html>
